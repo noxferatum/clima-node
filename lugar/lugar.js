@@ -1,9 +1,11 @@
 const axios = require('axios');
 
-// Usa la API de geocodificación de OpenWeather para obtener lat/lon a partir del nombre.
 const getLugarLatLng = async(dir) => {
     const encodedUlr = encodeURIComponent(dir);
-    const appId = 'a6558cff4a1485c9911b0860350982a0';
+    const appId = process.env.OPENWEATHER_KEY;
+    if (!appId) {
+        throw new Error('Configura la variable de entorno OPENWEATHER_KEY');
+    }
     const url = `https://api.openweathermap.org/geo/1.0/direct?q=${encodedUlr}&limit=1&appid=${appId}`;
 
     const resp = await axios.get(url);
